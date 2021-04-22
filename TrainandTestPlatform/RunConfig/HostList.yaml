@@ -1,0 +1,4 @@
+host_1: {filename: Code/Chou_Jnyi/TrainandTest/, hostip: 192.168.3.80, port: 22, pw: '123456',
+  user: choujnyi}
+host_3: {filename: PycharmProjects/Chou_Jnyi/Share/TrainandTest/, hostip: 192.168.3.52,
+  port: 22, pw: '123456', user: xiaohui}

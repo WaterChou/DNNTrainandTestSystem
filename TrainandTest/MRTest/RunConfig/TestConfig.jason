@@ -1,0 +1,1 @@
+{"epochs": 80, "save": false, "top_k": 1, "mr_name": "rotation", "model": "vgg16", "k": 10, "file_name": "./", "percent": 0.5, "dataset": "CIFAR10", "name": "Test", "k_sec": 1000, "runtime": 1, "type_name": "type_name", "lr": 1e-4, "drop_label": [], "alabel": -1}

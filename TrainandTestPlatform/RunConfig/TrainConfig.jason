@@ -1,0 +1,1 @@
+{"save": false, "runtime": 1, "model": "vgg16", "file_name": "PycharmProjects/Chou_Jnyi/Share/TrainandTest/MRTrain/", "drop_label": [], "epochs": 80, "k_sec": 0, "mr_name": "mr_name", "percent": 0.0, "type_name": "A", "k": 5000, "alabel": -1, "dataset": "CIFAR10", "name": "Train", "lr": 0.0001, "top_k": 0, "pid": 24546, "accuracy": 0.8243}

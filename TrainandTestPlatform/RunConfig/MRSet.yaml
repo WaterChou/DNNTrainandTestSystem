@@ -1,0 +1,28 @@
+"MNIST":
+  - "rotation"
+  - "transition"
+  - "scale"
+  - "elastic"
+
+"MNIST(0,1,3,8)":
+  - "rotation"
+  - "transition"
+  - "scale"
+  - "flip_v"
+  - "elastic"
+
+"MNIST(0,1,8)":
+  - "rotation"
+  - "transition"
+  - "scale"
+  - "flip_h"
+  - "elastic"
+
+"CIFAR10":
+  - "rotation"
+  - "transition"
+  - "scale"
+  - "flip_h"
+  - "bright"
+  - "hug"
+  - "saturation"

@@ -1,0 +1,1 @@
+{"percent": 0.0, "file_name": "./MRTrain/", "save": false, "dataset": "CIFAR10", "epochs": 80, "drop_label": [], "lr": 0.0001, "runtime": 1, "name": "Train", "mr_name": "mr_name", "k_sec": 0, "alabel": -1, "k": 5000, "model": "vgg16", "type_name": "A", "top_k": 0, "pid": 19172}
