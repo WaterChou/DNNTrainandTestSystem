@@ -109,21 +109,22 @@ def label_dense_to_one_hot(label_dense, class_num):
 
 
 def get_dict_mfr_data(sess, env, X_train, Y_train, batch_size=64,
-                      file_path="PycharmProjects/Chou_Jnyi/Share/TrainandTest/MRTest/",
+                      file_path="PycharmProjects/Chou_Jnyi/Share/TrainandTest/MRTest/dict/",
                       file_name="dict_mfr.json",
                       load_dict_mfr_flag=True, save_dict_mfr_flag=True):
 
-    if load_dict_mfr_flag and os.path.exists(file_path+"dict/"+file_name):
+    print(file_path+file_name)
+    if load_dict_mfr_flag and os.path.exists(file_path+file_name):
         print("Load " + file_name + " ...")
-        f = open("./dict/"+file_name, 'r')
+        f = open(file_path+file_name, 'r')
         dict_mfr = json.load(f)
         f.close()
     else:
         dict_mfr = get_dict_mfr(sess, env, X_train, Y_train, batch_size)
 
         if save_dict_mfr_flag is True:
-            os.makedirs('dict', exist_ok=True)
-            f = open("./dict/"+file_name, 'w', encoding='utf-8')
+            os.makedirs('{}dict', exist_ok=True)
+            f = open(file_path+file_name, 'w', encoding='utf-8')
             f.write(json.dumps(dict_mfr))
             f.close()
             print("Save " + file_name + " successfully.")

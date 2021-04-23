@@ -434,4 +434,5 @@ if __name__ == "__main__":
     # print(read_yaml("./RunConfig/MRSet.yaml"))
     rm = RemoteHost()
     mainwin = MainWindow(rm)
+    rm.mainviewer = mainwin
     mainwin.Inferface()

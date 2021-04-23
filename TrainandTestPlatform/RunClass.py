@@ -5,9 +5,11 @@ import threading
 import os
 import yaml
 
+
 class Run(threading.Thread):
 
     def __init__(self, name, viewer, remote_host):
+
         threading.Thread.__init__(self, name="RunInfo" + name)
         self.event = threading.Event()
 

@@ -10,14 +10,14 @@ print("\nRemote MR Test, pid ", pid)
 
 print(os.path.abspath(os.path.join(os.getcwd(),".")))
 
-test_configs = json.load(open("./RunConfig/TestConfig.jason", "r"))
-# test_configs = json.load(open("PycharmProjects/Chou_Jnyi/Share/TrainandTest/MRTest/RunConfig/TestConfig.jason"))
+# test_configs = json.load(open("./RunConfig/TestConfig.jason", "r"))
+test_configs = json.load(open("PycharmProjects/Chou_Jnyi/Share/TrainandTest/MRTest/RunConfig/TestConfig.jason"))
 test_configs['pid'] = pid
 print(test_configs)
-with open("./RunConfig/TestConfig.jason", "w") as f:
-    f.write(json.dumps(test_configs))
-# with open("PycharmProjects/Chou_Jnyi/Share/TrainandTest/MRTest/RunConfig/TestConfig.jason", "w") as f:
+# with open("./RunConfig/TestConfig.jason", "w") as f:
 #     f.write(json.dumps(test_configs))
+with open("PycharmProjects/Chou_Jnyi/Share/TrainandTest/MRTest/RunConfig/TestConfig.jason", "w") as f:
+    f.write(json.dumps(test_configs))
 
 mr_test_dnn = RunTestModel.RunTestModel(test_configs)
 mr_test_dnn.run()

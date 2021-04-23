@@ -181,7 +181,7 @@ class RunTestModel:
         print('\nget dict mfr')
         time_start = time.time()
 
-        dict_path = "{}{}/".format(self.file_path, self.model)
+        dict_path = "{}dict/{}/".format(self.file_path, self.model)
         dict_mfr = utils.get_dict_mfr_data(sess, env, x_train, y_train, batch_size=128, file_path=dict_path,
                                            load_dict_mfr_flag=True)
         print("time len = {}".format(time.time() - time_start))

@@ -27,6 +27,10 @@ class RemoteHost(threading.Thread):
 
         self.run_config = None
 
+        self.mainviewer = None
+
+        self.is_connected = False
+
         self.hostlist_dict = yaml.load(open("./RunConfig/HostList.yaml", 'r', encoding="utf-8"))
 
     def get_config(self):
@@ -34,7 +38,11 @@ class RemoteHost(threading.Thread):
         self.port = int(self.config_dict['port'].get())
         self.username = self.config_dict['user'].get()
         self.password = self.config_dict['pw'].get()
+        self.host_filename = self.config_dict['filename'].get()
 
+        self.mainviewer.tr_file_name_var.set("{}MR{}/".format(self.host_filename, self.mainviewer.run_train.name))
+        self.mainviewer.te_file_name_var.set("{}MR{}/".format(self.host_filename, self.mainviewer.run_test.name))
+        print("!!!", self.config_dict['filename'].get())
         self.connect()
 
         print(self.hostip)
@@ -194,12 +202,11 @@ class RemoteHost(threading.Thread):
         with open("./RunConfig/HostList.yaml", "w", encoding="utf-8") as f:
             yaml.dump(self.hostlist_dict, f)
 
-
     def Interface(self):
         print('connect host')
         RemoteWin = tk.Toplevel()
         RemoteWin.title("SSH Remote Host")
-        RemoteWin.geometry('350x200')
+        RemoteWin.geometry('450x200')
 
         self.viewer = RemoteWin
 
@@ -208,7 +215,7 @@ class RemoteHost(threading.Thread):
         hostip_var = tk.StringVar()
         hostip_var.set(self.hostip)
         ip_text = tk.Entry(RemoteWin, textvariable=hostip_var, width=20)
-        ip_text.place(relx=0.3, rely=0.02)
+        ip_text.place(relx=0.2, rely=0.02)
         self.config_dict['hostip'] = hostip_var
 
         port_label = tk.Label(RemoteWin, text="Port:", width=10)
@@ -216,7 +223,7 @@ class RemoteHost(threading.Thread):
         port_var = tk.StringVar()
         port_var.set(self.port)
         port_text = tk.Entry(RemoteWin, textvariable=port_var, width=20)
-        port_text.place(relx=0.3, rely=0.19)
+        port_text.place(relx=0.2, rely=0.19)
         self.config_dict['port'] = port_var
 
         user_label = tk.Label(RemoteWin, text="UserName:", width=10)
@@ -224,7 +231,7 @@ class RemoteHost(threading.Thread):
         user_var = tk.StringVar()
         user_var.set(self.username)
         user_text = tk.Entry(RemoteWin, textvariable=user_var, width=20)
-        user_text.place(relx=0.3, rely=0.36)
+        user_text.place(relx=0.2, rely=0.36)
         self.config_dict['user'] = user_var
 
         pw_label = tk.Label(RemoteWin, text="Password:", width=10)
@@ -232,32 +239,29 @@ class RemoteHost(threading.Thread):
         pw_var = tk.StringVar()
         pw_var.set(self.password)
         pw_text = tk.Entry(RemoteWin, textvariable=pw_var, width=20, show="*")
-        pw_text.place(relx=0.3, rely=0.53)
+        pw_text.place(relx=0.2, rely=0.53)
         self.config_dict['pw'] = pw_var
 
         filename_label = tk.Label(RemoteWin, text="File Path:", width=10)
-        filename_label.place(relx=0.02, rely=0.75)
+        filename_label.place(relx=0.02, rely=0.7)
         filename_var = tk.StringVar()
+        filename_text = tk.Entry(RemoteWin, textvariable=filename_var, width=45)
+        filename_text.place(relx=0.2, rely=0.70)
         filename_var.set(self.host_filename)
-        print(self.host_filename)
-        filename_text = tk.Text(RemoteWin, width=30, height=2, wrap='word')
-        filename_text.place(relx=0.3, rely=0.70)
-        filename_text.insert('end', filename_var.get())
         self.config_dict['filename'] = filename_var
 
         connect_button = tk.Button(RemoteWin, text="OK", command=self.get_config)
-        connect_button.place(relx=0.8, rely=0.4, anchor="center")
+        connect_button.place(relx=0.62, rely=0.55, anchor="center")
 
         save_host_info_label = tk.Label(RemoteWin, text="Save host", width=10, height=1, anchor='nw')
-        save_host_info_label.place(relx=0.81, rely=0.51)
+        save_host_info_label.place(relx=0.75, rely=0.5)
         self.save_host_info_var = tk.IntVar()
         self.save_host_info_var.set(0)
         save_checkbutton = tk.Checkbutton(RemoteWin, variable=self.save_host_info_var)
-        save_checkbutton.place(relx=0.73, rely=0.5)
+        save_checkbutton.place(relx=0.68, rely=0.5)
 
-        hostlist_buttom = tk.Button(RemoteWin,  text="Host List",
-                                    command=self.HostListInterface)
-        hostlist_buttom.place(relx=0.75, rely=0.02)
+        hostlist_buttom = tk.Button(RemoteWin,  text="Host List", command=self.HostListInterface)
+        hostlist_buttom.place(relx=0.65, rely=0.1, anchor="center")
         RemoteWin.mainloop()
 
     def HostListInterface(self):
@@ -265,7 +269,7 @@ class RemoteHost(threading.Thread):
         print('Host List')
         HostListWin = tk.Toplevel()
         HostListWin.title("Remote Host List")
-        HostListWin.geometry('400x200')
+        HostListWin.geometry('500x200')
 
         self.hostlist_viewer = HostListWin
 
