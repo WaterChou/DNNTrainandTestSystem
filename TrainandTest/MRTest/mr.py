@@ -514,7 +514,7 @@ def mr_output(x_data, y_data, mr_name, k, par=None):
         else:
             def func_par(): return par
 
-    elif mr_name == 'scalling':
+    elif mr_name == 'scale':
         mr_func = img_scaling
         if par is None:
             def func_par():

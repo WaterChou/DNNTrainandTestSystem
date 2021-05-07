@@ -48,9 +48,9 @@ class RunTestModel:
 
         # data_order
         print(order_data_path)
-        print(os.path.exists('{}x_order.npy'.format(order_data_path)))
+        print(os.path.isfile('{}x_order.npy'.format(order_data_path)))
 
-        if os.path.exists('{}x_order.npy'.format(order_data_path)):
+        if os.path.isfile('{}x_order.npy'.format(order_data_path)):
             print('\nLoad Train order data')
             x_order_org = np.load('{}x_order.npy'.format(order_data_path))
             y_order_org = np.load('{}y_order.npy'.format(order_data_path))

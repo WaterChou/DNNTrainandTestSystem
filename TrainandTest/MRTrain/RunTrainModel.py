@@ -25,7 +25,7 @@ class RunDataset:
         self.k = config_dict['k']
         self.mr_per = config_dict['percent']
         self.mr_name = config_dict['mr_name']
-        if config_dict['type_name'] != 'A':
+        if config_dict['type_name'] == 'B':
             self.alabel = config_dict['alabel']
         self.flag_save_data = config_dict['save']
         self.drop_label = config_dict['drop_label']
@@ -316,8 +316,6 @@ class RunDataset:
 
             else:
                 print('Not found Type {} Training set'.format(self.flag_train_mr))
-
-
 
 
 def cifar10(config_dict):

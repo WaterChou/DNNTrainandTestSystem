@@ -1,4 +1,5 @@
 import tkinter as tk
+import tkinter.messagebox
 import paramiko
 import json
 import threading
@@ -43,8 +44,22 @@ class RemoteHost(threading.Thread):
         self.mainviewer.tr_file_name_var.set("{}MR{}/".format(self.host_filename, self.mainviewer.run_train.name))
         self.mainviewer.te_file_name_var.set("{}MR{}/".format(self.host_filename, self.mainviewer.run_test.name))
         print("!!!", self.config_dict['filename'].get())
-        self.connect()
 
+        try:
+            self.connect()
+
+        except paramiko.ssh_exception.AuthenticationException:
+            tk.messagebox.showwarning(title="Connection failed", message="AuthenticationException")
+
+        except paramiko.ssh_exception.SSHException:
+            tk.messagebox.showwarning(title="Connection failed", message="SSHException")
+
+        except paramiko.ssh_exception.NoValidConnectionsError:
+            tk.messagebox.showwarning(title="Connection failed", message="NoValidConnectionsError")
+
+        else:
+            tk.messagebox.showinfo(title="Connection succeed",
+                                   message="Connect with host {}:{} !".format(self.hostip, self.port))
         print(self.hostip)
         print(self.port)
         print(self.username)
@@ -56,8 +71,8 @@ class RemoteHost(threading.Thread):
 
     def connect(self):
         transport = paramiko.Transport((self.hostip, self.port))
+        # transport.settimeout(300)
         transport.connect(username=self.username, password=self.password)
-
         self._transport = transport
 
     def download(self, remotepath, localpath):  # download
@@ -188,6 +203,7 @@ class RemoteHost(threading.Thread):
         self.config_dict["hostip"].set(self.hostip)
         self.config_dict["port"].set(self.port)
         self.config_dict["pw"].set(self.password)
+        self.config_dict["filename"].set(self.host_filename)
 
         self.hostlist_viewer.destroy()
 
@@ -297,6 +313,3 @@ class RemoteHost(threading.Thread):
         delete_host_button.place(relx=0.7, rely=0.8)
 
         HostListWin.mainloop()
-
-
-

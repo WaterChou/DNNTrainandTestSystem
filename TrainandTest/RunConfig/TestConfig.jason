@@ -1,1 +1,0 @@
-{"name": "Test", "mr_name": "mr_name", "pid": 8400, "k": 100, "percent": 8.0, "dataset": "MNIST", "epochs": 5, "lr": 1e-3, "model": "lenet5", "accuracy": 0.88}

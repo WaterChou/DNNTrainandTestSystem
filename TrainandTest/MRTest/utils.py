@@ -113,7 +113,7 @@ def get_dict_mfr_data(sess, env, X_train, Y_train, batch_size=64,
                       file_name="dict_mfr.json",
                       load_dict_mfr_flag=True, save_dict_mfr_flag=True):
 
-    print(file_path+file_name)
+    print("dict path: ", file_path+file_name)
     if load_dict_mfr_flag and os.path.exists(file_path+file_name):
         print("Load " + file_name + " ...")
         f = open(file_path+file_name, 'r')
@@ -123,7 +123,7 @@ def get_dict_mfr_data(sess, env, X_train, Y_train, batch_size=64,
         dict_mfr = get_dict_mfr(sess, env, X_train, Y_train, batch_size)
 
         if save_dict_mfr_flag is True:
-            os.makedirs('{}dict', exist_ok=True)
+            os.makedirs(file_path, exist_ok=True)
             f = open(file_path+file_name, 'w', encoding='utf-8')
             f.write(json.dumps(dict_mfr))
             f.close()
@@ -295,10 +295,9 @@ def evaluate(sess, env, X_data, y_data, batch_size=128):
         start = batch * batch_size
         end = min(n_sample, start + batch_size)
         cnt = end - start
-        batch_loss, batch_acc = sess.run(
-            [env.loss, env.acc],
-            feed_dict={env.x: X_data[start:end],
-                       env.y: y_data[start:end]})
+        batch_loss, batch_acc = sess.run([env.loss, env.acc],
+                                         feed_dict={env.x: X_data[start:end],
+                                                    env.y: y_data[start:end]})
         loss += batch_loss * cnt
         acc += batch_acc * cnt
     loss /= n_sample

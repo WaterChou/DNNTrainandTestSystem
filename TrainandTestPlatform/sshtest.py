@@ -1,4 +1,6 @@
 import paramiko
+import os
+
 
 class SSHConnection(object):
     def __init__(self, host, port, username, password):
@@ -93,12 +95,14 @@ if __name__ == "__main__":
     # cm = "anaconda3/envs/tf/bin/python; python MRTrain"
     # stdin, stdout, stderr = client.exec_command(cm)
     # print(stdout.read()) "ldconfig /usr/local/cuda/lib64;"\
-    conn = SSHConnection('192.168.3.52', 22, username='xiaohui', password='123456')
+    conn = SSHConnection('192.168.3.80', 22, username='choujnyi', password='123456')
     # cm = "anaconda3/envs/tf/bin/python " \
-    #      "PycharmProjects/Chou_Jnyi/Share/TrainandTest/MRTrain/MRTrain.py"
-    #
+    #      "code/TrainandTest/MRTest/MRTest.py"
+
     # conn.exec_command(cm)
-    rm_path = "PycharmProjects/Chou_Jnyi/Share/TrainandTest/MRTrain/test_res/MNIST/A_k5000/acc_label.xlsx"
-    lc_path = "./test_res/MNIST/A_k5000/acc_label.xlsx"
-    conn.download(rm_path, lc_path)
+    rm_path = "code/TrainandTest/MRTest/RunConfig/TestConfig.jason"
+    lc_path = "./RunConfig/TestConfig.jason"
+    # print(os.path.isfile(lc_path))
+    conn.put(lc_path, rm_path)
+    # conn.download(rm_path, lc_path)
     conn.close()

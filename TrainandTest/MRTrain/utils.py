@@ -205,7 +205,7 @@ def train(sess, env, x_data, y_data, x_valid=None, y_valid=None, epochs=1,
     #     env.saver.save(sess, 'model_save/{}'.format(name))
 
 
-def evaluate(sess, env, x_data, y_data, batch_size=128, ):
+def evaluate(sess, env, x_data, y_data, batch_size=128):
     """
     Evaluate TF model by running env.loss and env.acc.
     """

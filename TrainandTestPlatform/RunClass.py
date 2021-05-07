@@ -1,5 +1,6 @@
 import tkinter as tk
 from SaveJason import SaveJson
+import tkinter.messagebox
 import ConnectHost
 import threading
 import os
@@ -39,7 +40,7 @@ class Run(threading.Thread):
 
         self.host_file_name = "{}MR{}/".format(remote_host.host_filename, name)
         self.local_config_path = "./RunConfig/{}Config.jason".format(name)  # local
-        self.host_config_path = "{}RunConfig/{}Config.jason".format(self.host_file_name, name)  # local
+        # self.host_config_path = "{}RunConfig/{}Config.jason".format(self.host_file_name, name)  # local
 
         self.kmncov = 0
         self.nbcov = 0
@@ -86,13 +87,16 @@ class Run(threading.Thread):
         self.runtime = int(self.config_obj['runtime'].get())
         self.k = int(self.config_obj['k'].get())
         self.host_file_name = self.config_obj['host_file_name'].get()
+        self.host_config_path = "{}RunConfig/{}Config.jason".format(self.host_file_name, self.name)
         self.save_flag = bool(self.config_obj['save'].get())
+
+        print("set config: ", self.host_file_name)
 
         for k in self.config_obj_box.keys():
             self.config_obj_box[k].config(state="disabled")
 
         # self.remote_host.connect()
-        print(self.name, "set config host file name", self.host_file_name)
+        print(self.name, "set config host file name: ", self.host_file_name)
         self.remote_host.local_filename = "./RunConfig/{}Config.jason".format(self.name)
         self.remote_host.host_filename = "{}RunConfig/{}Config.jason".format(self.host_file_name,
                                                                              self.name)
@@ -117,6 +121,9 @@ class Run(threading.Thread):
                 'file_name': self.host_file_name}
 
         SaveJson().save_file("./RunConfig/", "{}Config.jason".format(self.name), item)
+        print("put config")
+        print(self.local_config_path)
+        print(self.host_config_path)
         self.remote_host.put(self.local_config_path, self.host_config_path)
 
     def get_res(self):
@@ -207,18 +214,21 @@ class RunInferace:
 
         print('\nrun interface')
         self.viewer.delete(1.0, 'end')
-        self.viewer.insert('insert', "Remote {}ing...\n".format(self.run_config.name))
+        # self.viewer.insert('insert', "Remote {}ing...\n".format(self.run_config.name))
 
         self.run_config.stop = False
 
-        self.run_config.set_config()
+        try:
+            self.run_config.set_config()
+        except ValueError:
+            tk.messagebox.showwarning(title="Run failed", message="ValueError")
+        else:
+            t_get_res = threading.Thread(target=self.update_res)
+            t_get_res.start()
 
-        t_get_res = threading.Thread(target=self.update_res)
-        t_get_res.start()
-
-        cm = "anaconda3/envs/tf/bin/python {}MR{}.py".format(self.run_config.host_file_name, self.run_config.name)
-        t_rm = threading.Thread(target=self.run_config.remote_host.exec_command, args=(cm,))
-        t_rm.start()
+            cm = "anaconda3/envs/tf/bin/python {}MR{}.py".format(self.run_config.host_file_name, self.run_config.name)
+            t_rm = threading.Thread(target=self.run_config.remote_host.exec_command, args=(cm,))
+            t_rm.start()
 
 
 

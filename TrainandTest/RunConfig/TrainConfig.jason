@@ -1,1 +1,0 @@
-{"alabel": -1, "mr_name": "mr_name", "k_sec": 0, "top_k": 0, "save": false, "drop_label": [], "k": 5000, "type_name": "A", "model": "lenet5", "runtime": 1, "lr": 0.0001, "name": "Train", "file_name": "./", "epochs": 5, "dataset": "MNIST", "percent": 0.0, "pid": 29367}

@@ -9,14 +9,14 @@ print(os.path.abspath(os.path.join(os.getcwd(),".")))
 
 pid = os.getpid()
 print("Remote MR Train, pid ", pid)
-# train_configs = json.load(open("PycharmProjects/Chou_Jnyi/Share/TrainandTest/MRTrain/RunConfig/TrainConfig.jason"))
-train_configs = json.load(open("./MRTrain/RunConfig/TrainConfig.jason", "r"))
+train_configs = json.load(open("PycharmProjects/Chou_Jnyi/Share/TrainandTest/MRTrain/RunConfig/TrainConfig.jason"))
+# train_configs = json.load(open("./MRTrain/RunConfig/TrainConfig.jason", "r"))
 train_configs['pid'] = pid
 # print(train_configs)
-with open("./MRTrain/RunConfig/TrainConfig.jason", "w") as f:
-    f.write(json.dumps(train_configs))
-# with open("PycharmProjects/Chou_Jnyi/Share/TrainandTest/MRTrain/RunConfig/TrainConfig.jason", "w") as f:
+# with open("./MRTrain/RunConfig/TrainConfig.jason", "w") as f:
 #     f.write(json.dumps(train_configs))
+with open("PycharmProjects/Chou_Jnyi/Share/TrainandTest/MRTrain/RunConfig/TrainConfig.jason", "w") as f:
+    f.write(json.dumps(train_configs))
 
 if train_configs['dataset'] == "MNIST":
     train_configs['drop_label'] = []
